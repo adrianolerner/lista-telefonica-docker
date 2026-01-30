@@ -1,0 +1,47 @@
+services:
+  app:
+    # Para buid local manter o bloco abaixo
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    # Para usar a imagem direto do dockerhub, remover o bloco acima e descomentar o bloco abaixo
+    #image: albiesek/lista-telefonica:latest
+    container_name: lista-telefonica
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - DB_SERVER=db_agenda
+      - DB_NAME=agenda
+      - DB_USERNAME=admin
+      - DB_PASSWORD=admin
+      - CF_SITE_KEY=
+      - CF_SECRET_KEY=
+      - NOME_ORGAO=PREFEITURA DA CIDADE TAL
+    depends_on:
+      - db_agenda
+    networks:
+      - agenda_net
+    volumes:
+      - ./img:/var/www/html/img
+
+  db_agenda:
+    image: mysql:8.0
+    container_name: db_agenda
+    restart: always
+    environment:
+      MYSQL_DATABASE: agenda
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin123
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - agenda_net
+
+networks:
+  agenda_net:
+    driver: bridge
+
+volumes:
+  db_data:
