@@ -11,13 +11,17 @@ services:
     ports:
       - "8080:80"
     environment:
+      # Dados de acesso ao banco de dados (devem ser os mesmos configurados na seção do banco mais abaixo.
       - DB_SERVER=db_agenda
       - DB_NAME=agenda
       - DB_USERNAME=admin
       - DB_PASSWORD=admin
+      # Chaves da configuração do captcha do Cloudflare Turnstile (pode ser configurado gratuitamente em: https://www.cloudflare.com/pt-br/application-services/products/turnstile/)
       - CF_SITE_KEY=
       - CF_SECRET_KEY=
+      # Configuração do nome do órgão
       - NOME_ORGAO=PREFEITURA DA CIDADE TAL
+      # Configuração para restringir o acesso ao Painel Administrativo apenas para a rede interna (Intranet).
       - RESTRITO_POR_IP=false
       - FAIXA_IP_PERMITIDA=127.0.0.*
     depends_on:
@@ -32,6 +36,7 @@ services:
     container_name: db_agenda
     restart: always
     environment:
+      # Dados de acesso ao banco de dados (devem ser os mesmos da seção APP, com excessão do root)
       MYSQL_DATABASE: agenda
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
