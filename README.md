@@ -41,7 +41,7 @@ cd lista-telefonica
 nano dcoker-compose.yml
 ```
 
-Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
+Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO`, `RESTRITO_POR_IP`, `FAIXA_IP_PERMITIDA` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
 
 ```yaml
 services:
@@ -52,13 +52,19 @@ services:
     ports:
       - "8080:80"
     environment:
+      # Dados de acesso ao banco de dados (devem ser os mesmos configurados na seção do banco mais abaixo.
       - DB_SERVER=db_agenda
       - DB_NAME=agenda
       - DB_USERNAME=admin
       - DB_PASSWORD=admin
+      # Chaves da configuração do captcha do Cloudflare Turnstile (pode ser configurado gratuitamente em: https://www.cloudflare.com/pt-br/application-services/products/turnstile/)
       - CF_SITE_KEY=
       - CF_SECRET_KEY=
+      # Configuração do nome do órgão
       - NOME_ORGAO=PREFEITURA DA CIDADE TAL
+      # Configuração para restringir o acesso ao Painel Administrativo apenas para a rede interna (Intranet).
+      - RESTRITO_POR_IP=false
+      - FAIXA_IP_PERMITIDA=127.0.0.*
     depends_on:
       - db_agenda
     networks:
@@ -71,6 +77,7 @@ services:
     container_name: db_agenda
     restart: always
     environment:
+      # Dados de acesso ao banco de dados (devem ser os mesmos da seção APP, com excessão do root)
       MYSQL_DATABASE: agenda
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
@@ -164,21 +171,8 @@ As seguintes variáveis podem ser definidas no `docker-compose.yml` ou no `.env`
 | `NOME_ORGAO` | Nome exibido no topo (Ex: PREFEITURA X) | `NOME DA PREFEITURA` |
 | `CF_SITE_KEY` | Chave pública do Cloudflare Turnstile | *(Vazio)* |
 | `CF_SECRET_KEY` | Chave secreta do Cloudflare Turnstile | *(Vazio)* |
-
-### 2. Controle de Acesso (IP e Rede)
-
-Para restringir o acesso ao Painel Administrativo apenas para a rede interna (Intranet), ajuste as constantes no início do arquivo `src/config.php` (ou mapeie um volume com o arquivo alterado).
-
-```php
-// true = Bloqueia acesso externo ao admin / false = Libera geral
-define('RESTRITO_POR_IP', true);
-
-// Define a faixa de IP permitida (aceita curinga *)
-define('FAIXA_IP_PERMITIDA', '172.16.0.*'); 
-
-```
-
-*Se o IP do usuário não corresponder à faixa, o botão de login será ocultado e o acesso direto às páginas administrativas será bloqueado.*
+| `RESTRITO_POR_IP` | Ativa ou desativa a validação de IP para acesso ao painel administrativo | *false* |
+| `FAIXA_IP_PERMITIDA` | Configura a faixa de IPs permitidas quando o item `RESTRITO_POR_IP` for `true` | *127.0.0.** |
 
 ## Segurança e Captcha
 
@@ -190,7 +184,7 @@ Para ativar o Captcha no login, basta preencher as variáveis de ambiente `CF_SI
 
 * **Ativação Automática:** Se as chaves estiverem preenchidas, o Captcha aparece.
 * **Desativação Automática:** Se as variáveis estiverem vazias, o Captcha é desabilitado.
-* **Modo Desenvolvedor:** Se você acessar via `localhost` ou IPs locais (`127.0.0.1`, `172.16.0.10`), o Captcha é ignorado automaticamente para facilitar testes, exibindo apenas um alerta visual.
+* **Modo Desenvolvedor:** Se você acessar via `localhost` ou IPs locais (`127.0.0.1`), o Captcha é ignorado automaticamente para facilitar testes, exibindo apenas um alerta visual.
 
 ## Uso
 
