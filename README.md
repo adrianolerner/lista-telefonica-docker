@@ -166,6 +166,8 @@ As seguintes variáveis podem ser definidas no `docker-compose.yml` ou no `.env`
 | `NOME_ORGAO` | Nome exibido no topo (Ex: PREFEITURA X) | `NOME DA PREFEITURA` |
 | `CF_SITE_KEY` | Chave pública do Cloudflare Turnstile | *(Vazio)* |
 | `CF_SECRET_KEY` | Chave secreta do Cloudflare Turnstile | *(Vazio)* |
+| `RESTRITO_POR_IP` | Ativa ou desativa a validação de IP para acesso ao painel administrativo | *false* |
+| `FAIXA_IP_PERMITIDA` | Configura a faixa de IPs permitidas quando o item `RESTRITO_POR_IP` for `true` | *127.0.0.** |
 
 ### 2. Controle de Acesso (IP e Rede)
 
