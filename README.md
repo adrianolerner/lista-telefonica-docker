@@ -30,20 +30,20 @@ A versão 0.16 foi otimizada para containers. O processo é "Zero-Touch": ao sub
 
 1. **Crie uma pasta em seu servidor chamada `lista-telefonica` e acesse a pasta criada**
 
-``bash
+```bash
 mkdir lista-telefonica
 cd lista-telefonica
-``
+```
 
 2. **Crie um arquivo chamado `docker-compose.yml` e insira nele o conteudo abaixo:**
 
-``bash
+```bash
 nano dcoker-compose.yml
-``
+```
 
 Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
 
-``yaml
+```yaml
 services:
   app:
     image: albiesek/lista-telefonica:latest
@@ -86,19 +86,19 @@ networks:
 
 volumes:
   db_data:
-``
+```
 
 3. **Sua o container e inclua suas imagens próprias na pasta img criada.**
 
-``bash
+```bash
 sudo docker compose up -d
-``
+```
 
 ou
 
-``bash
+```bash
 sudo docker-compose up -d
-``
+```
 
 ## Instalação via Docker (deploy com build local do container)
 
