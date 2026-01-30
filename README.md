@@ -184,7 +184,7 @@ Para ativar o Captcha no login, basta preencher as variáveis de ambiente `CF_SI
 
 * **Ativação Automática:** Se as chaves estiverem preenchidas, o Captcha aparece.
 * **Desativação Automática:** Se as variáveis estiverem vazias, o Captcha é desabilitado.
-* **Modo Desenvolvedor:** Se você acessar via `localhost` ou IPs locais (`127.0.0.1`, `172.16.0.10`), o Captcha é ignorado automaticamente para facilitar testes, exibindo apenas um alerta visual.
+* **Modo Desenvolvedor:** Se você acessar via `localhost` ou IPs locais (`127.0.0.1`), o Captcha é ignorado automaticamente para facilitar testes, exibindo apenas um alerta visual.
 
 ## Uso
 
