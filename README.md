@@ -43,7 +43,7 @@ nano dcoker-compose.yml
 
 Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
 
-``yml
+``yaml
 services:
   app:
     image: albiesek/lista-telefonica:latest
