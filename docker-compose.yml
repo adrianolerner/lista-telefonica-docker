@@ -18,6 +18,8 @@ services:
       - CF_SITE_KEY=
       - CF_SECRET_KEY=
       - NOME_ORGAO=PREFEITURA DA CIDADE TAL
+      - RESTRITO_POR_IP=false
+      - FAIXA_IP_PERMITIDA=127.0.0.*
     depends_on:
       - db_agenda
     networks:
