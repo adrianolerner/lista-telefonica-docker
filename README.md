@@ -41,7 +41,7 @@ cd lista-telefonica
 nano dcoker-compose.yml
 ```
 
-Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
+Cole este conteudo, edite as variáveis `DB_USERNAME`, `DB_PASSWORD`, `CF_SITE_KEY`, `CF_SECRET_KEY`, `NOME_ORGAO`, `RESTRITO_POR_IP`, `FAIXA_IP_PERMITIDA` (as variáveis do banco dedados na seção APP e no `db_agenda` devem ser iguais) e salve o arquivo:
 
 ```yaml
 services:
@@ -59,6 +59,8 @@ services:
       - CF_SITE_KEY=
       - CF_SECRET_KEY=
       - NOME_ORGAO=PREFEITURA DA CIDADE TAL
+      - RESTRITO_POR_IP=false
+      - FAIXA_IP_PERMITIDA=127.0.0.*
     depends_on:
       - db_agenda
     networks:
